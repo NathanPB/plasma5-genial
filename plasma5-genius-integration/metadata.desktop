@@ -1,0 +1,19 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Plasma 5 Genius Integration
+Comment=Applet to show the lyrics of whatever is playing on your Spotify
+Type=Service
+
+X-KDE-Library=plasma5genius
+X-KDE-ParentApp=
+X-KDE-PluginInfo-Author=NathanPB
+X-KDE-PluginInfo-Email=nathan.pbombana@gmail.com
+X-KDE-PluginInfo-License=GPL-3
+X-KDE-PluginInfo-Name=dev.nathanpb.plasma5genius
+X-KDE-PluginInfo-Version=1.0
+X-KDE-PluginInfo-Website=https://plasma5genius.nathanpb.dev
+X-KDE-ServiceTypes=Plasma/Applet
+X-Plasma-API=declarativeappletscript
+X-Plasma-MainScript=ui/main.qml
+X-KDE-PluginInfo-Category=Multimedia
+X-Plasma-DBusActivationService=org.mpris.MediaPlayer2.*
