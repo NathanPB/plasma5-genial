@@ -10,7 +10,6 @@ const httpRequest = (url, method, headers) => new Promise((resolve, reject) => {
         request.setRequestHeader(key, headers[key]);
     })
 
-    console.log(url);
     request.onreadystatechange = () => {
         if(request.readyState === XMLHttpRequest.DONE) {
             resolve(request);
