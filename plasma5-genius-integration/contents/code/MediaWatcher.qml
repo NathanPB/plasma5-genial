@@ -5,6 +5,14 @@ Item {
     id: mpris2Source
     property var mprisSource: mpris2DataSource
 
+    property var metadata: mpris2DataSource.currentData.Metadata || {};
+
+    property string currentTrackId: metadata['mpris:trackid'] || null
+    property string currentAlbum:   metadata['xesam:album']   || null
+    property var currentArtist:     metadata['xesam:artist']  || null
+    property string currentTitle:   metadata['xesam:title']   || null
+    property string currentUrl:     metadata['xesam:url']     || null
+
     signal trackIdChange(string trackId)
     signal albumChange(string album)
     signal artistChange(var artist)
@@ -21,43 +29,45 @@ Item {
 
         engine: "mpris2"
 
-        readonly property string multiplexSource: "@multiplex"
-        property string current: multiplexSource
+        readonly property var currentData: data["@multiplex"] || {}
 
-        readonly property var currentData: data[current]
-
-        connectedSources: current
+        connectedSources: "@multiplex"
 
         onCurrentDataChanged: {
-            const metadata = (mpris2DataSource.currentData || {}).Metadata || {}
-
-            const newData = {
-                trackId: metadata['mpris:trackid'],
-                album: metadata['xesam:album'],
-                artist: metadata['xesam:artist'],
-                title: metadata['xesam:title'],
-                url: metadata['xesam:url']
-            };
-            
             const cache = playerCache.cache || {};
+            const currentData = {
+                trackId: mpris2Source.currentTrackId,
+                album: mpris2Source.currentAlbum,
+                artist: mpris2Source.currentArtist,
+                title: mpris2Source.currentTitle,
+                url: mpris2Source.currentUrl
+            };
 
-            if(newData.trackId !== cache.trackId)
-                mpris2Source.trackIdChange(newData.trackId);
+            if(mpris2Source.currentTrackId !== cache.trackId)
+                mpris2Source.trackIdChange(mpris2Source.currentTrackId);
 
-            if(newData.album !== cache.album)
-                mpris2Source.albumChange(newData.album);
+            if(mpris2Source.currentAlbum !== cache.album)
+                mpris2Source.albumChange(mpris2Source.currentAlbum);
             
             //JS hacks ftw
-            if( (newData.artist || []).sort().toString() !== (cache.artist || []).sort().toString())
-                mpris2Source.artistChange(newData.artist);
+            if( (mpris2Source.currentArtist || []).sort().toString() !== (cache.artist || []).sort().toString())
+                mpris2Source.artistChange(mpris2Source.currentArtist);
 
-            if(newData.title !== cache.title)
-                mpris2Source.titleChange(newData.title);
+            if(mpris2Source.currentTitle !== cache.title)
+                mpris2Source.titleChange(mpris2Source.currentTitle);
 
-            if(newData.url !== cache.url)
-                mpris2Source.urlChange(newData.url);
+            if(mpris2Source.currentUrl !== cache.url)
+                mpris2Source.urlChange(mpris2Source.currentUrl);
 
-            playerCache.cache = newData;
+            playerCache.cache = currentData;
+        }
+    }
+
+    Timer {
+        running: true
+        repeat: true
+        onTriggered: {
+            if(!mpris2Source.currentTitle) mpris2DataSource.currentDataChanged();
         }
     }
 }
