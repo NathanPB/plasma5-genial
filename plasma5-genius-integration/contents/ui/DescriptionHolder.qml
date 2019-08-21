@@ -16,7 +16,7 @@ Item {
         interval: Math.max((root.descriptionArray[root.currentIndex] || '').length * 75, 5000)
 
         onTriggered: {
-            if(root.currentIndex >= root.descriptionArray.length){
+            if(root.currentIndex+1 >= root.descriptionArray.length){
                 root.currentIndex = 0;
             } else {
                 root.currentIndex++;
