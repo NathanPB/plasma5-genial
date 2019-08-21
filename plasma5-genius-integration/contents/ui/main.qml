@@ -21,7 +21,7 @@ Item {
         onTitleChange: {
             console.log('new title received on main.qml', title);
             if(title){
-                ApiHelper.searchTrack(`${title} ${mediaWatcher.currentArtist || ''}`)
+                ApiHelper.searchTrack(`${title} ${(mediaWatcher.currentArtist || []).join(' ')}`)
                     .then(track => {
                         if(track) {
                         albumCover.source = track.header_image_url;
