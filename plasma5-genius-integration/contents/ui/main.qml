@@ -6,20 +6,10 @@ import '../code/api-helper.js' as ApiHelper;
 import '../code'
 
 Item {
-
-    Timer {
-        repeat: true
-        running: false
-        onTriggered: {
-            console.log(mediaWatcher.currentTitle);
-        }
-    }
-
     MediaWatcher {
         id: mediaWatcher
 
         onTitleChange: {
-            console.log('new title received on main.qml', title);
             if(title){
                 ApiHelper.searchTrack(`${title} ${(mediaWatcher.currentArtist || []).join(' ')}`)
                     .then(track => {
