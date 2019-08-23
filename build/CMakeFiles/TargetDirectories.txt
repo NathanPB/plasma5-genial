@@ -1,7 +1,0 @@
-/home/nathan/Projects/plasma5-genius-integration/build/CMakeFiles/install/strip.dir
-/home/nathan/Projects/plasma5-genius-integration/build/CMakeFiles/install/local.dir
-/home/nathan/Projects/plasma5-genius-integration/build/CMakeFiles/edit_cache.dir
-/home/nathan/Projects/plasma5-genius-integration/build/CMakeFiles/dev.nathanpb.plasma5genius-plasmoids-metadata-json.dir
-/home/nathan/Projects/plasma5-genius-integration/build/CMakeFiles/rebuild_cache.dir
-/home/nathan/Projects/plasma5-genius-integration/build/CMakeFiles/list_install_components.dir
-/home/nathan/Projects/plasma5-genius-integration/build/CMakeFiles/install.dir

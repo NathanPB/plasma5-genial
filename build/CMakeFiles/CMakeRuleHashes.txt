@@ -1,3 +1,0 @@
-# Hashes of file build rules.
-58a3b53f70c5c847309d2cb8f13a8db7 CMakeFiles/dev.nathanpb.plasma5genius-plasmoids-metadata-json
-c6f7288022e2e480e53ae9d5cc84bc94 dev.nathanpb.plasma5genius-plasmoids-metadata.json
