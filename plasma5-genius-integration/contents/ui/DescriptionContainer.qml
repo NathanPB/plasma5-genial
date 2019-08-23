@@ -4,22 +4,24 @@ Item {
     id: root
     property string text
 
+    width: 250
+    height: 250
+
     Rectangle {
-        width: 250
-        height: 250
         radius: 8
         opacity: .7
         color: "#000000"
-        anchors.verticalCenter: descriptionText.verticalCenter
-        anchors.horizontalCenter: descriptionText.horizontalCenter
+
+        width: 250
+        height: 250
+        anchors.verticalCenter: root.verticalCenter
+        anchors.horizontalCenter: root.horizontalCenter
     }
 
     DescriptionText {
         id: descriptionText
         text: root.text
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: root.verticalCenter
+        anchors.horizontalCenter: root.horizontalCenter
     }
-    
-
 }
