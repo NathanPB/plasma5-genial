@@ -32,25 +32,7 @@ Item {
                         albumCover.source = track.header_image_url;
                         ApiHelper.searchTrackDescriptions(track.id, root.geniusToken)
                             .then(description => {
-                                let descriptionArray = [];
-                                description.split('\n\n').forEach(paragraph => {
-                                    if(paragraph <= 256) {
-                                        descriptionArray.push(paragraph);
-                                    } else {
-                                        let appender = '';
-                                        paragraph.split(" ").forEach(word => {
-                                            if(appender.length > 256) {
-                                                descriptionArray.push(`${appender}...`);
-                                                appender = '';
-                                            } else {
-                                                appender += ` ${word}`;
-                                            }
-                                        })
-                                    }
-                                });
-
-
-                                descriptionHolder.descriptionArray = descriptionArray;
+                                descriptionHolder.descriptionArray = description.split('\n\n');
                                 descriptionHolder.forceUpdate();
                             });
                         }
