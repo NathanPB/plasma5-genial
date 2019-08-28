@@ -3,6 +3,7 @@ import QtQuick 2.0
 Item {
     id: root
     property string text
+    property string trackTitle
 
     width: 250
     height: 250
@@ -20,7 +21,7 @@ Item {
 
     DescriptionText {
         id: descriptionText
-        text: root.text
+        text: root.text || `Nothing found about ${trackTitle} :(`
         anchors.verticalCenter: root.verticalCenter
         anchors.horizontalCenter: root.horizontalCenter
     }

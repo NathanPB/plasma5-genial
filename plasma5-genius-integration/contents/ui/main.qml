@@ -26,6 +26,18 @@ Item {
 
         onTitleChange: {
             if(title && root.geniusToken) {
+                let artists = mediaWatcher.currentArtist;
+                let trackTitle = title;
+                if(artists.length > 0) {
+                    trackTitle = `${artists[0]} - ${trackTitle}`;
+
+                    if(artists.length > 1) {
+                        trackTitle += ` ft. ${artists.slice(1).join(', ')}`;
+                    }
+                }
+
+                descriptionContainer.trackTitle = trackTitle;
+                descriptionHolder.loading = true
                 ApiHelper.searchTrack(`${title} ${(mediaWatcher.currentArtist || []).join(' ')}`, root.geniusToken)
                     .then(track => {
                         if(track) {
@@ -34,23 +46,29 @@ Item {
                             .then(description => {
                                 let descriptionArray = [];
                                 description.split('\n\n').forEach(paragraph => {
-                                    if(paragraph <= 256) {
-                                        descriptionArray.push(paragraph);
-                                    } else {
-                                        let appender = '';
-                                        paragraph.split(" ").forEach(word => {
-                                            if(appender.length > 256) {
-                                                descriptionArray.push(`${appender}...`);
-                                                appender = '';
-                                            } else {
-                                                appender += ` ${word}`;
+                                    if(paragraph.length > 3) {
+                                        if(paragraph.length <= 256) {
+                                            descriptionArray.push(paragraph);
+                                        } else {
+                                            let appender = '';
+                                            paragraph.split(" ").forEach(word => {
+                                                if(appender.length > 256) {
+                                                    descriptionArray.push(`${appender}...`);
+                                                    appender = '';
+                                                } else {
+                                                    appender += ` ${word}`;
+                                                }
+                                            })
+                                            if(appender.length <= 256) {
+                                                descriptionArray.push(appender);
                                             }
-                                        })
+                                        }
                                     }
                                 });
 
 
                                 descriptionHolder.descriptionArray = descriptionArray;
+                                descriptionHolder.loading = false;
                                 descriptionHolder.forceUpdate();
                             });
                         }
@@ -79,7 +97,7 @@ Item {
 
     Item {
         id: runningRepresentation
-        opacity: geniusToken && mediaWatcher.currentTitle && !descriptionHolder.isEmpty ? 1 : 0
+        opacity: geniusToken && descriptionContainer.trackTitle && !descriptionHolder.loading ? 1 : 0
 
         width: 256
         height: 256
@@ -93,7 +111,7 @@ Item {
             text: descriptionHolder.isEmpty ? '' : descriptionHolder.descriptionArray[descriptionHolder.currentIndex]
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
-        }    
+        }
 
         TimerProgressBar {
             id: progressBar
@@ -106,7 +124,7 @@ Item {
     Item {
         id: missingAuthenticationRepresentation
         opacity: root.geniusToken ? 0 : 1
-    
+
         DescriptionText {
             text: 'You are not logged in!\n'
         }
@@ -127,7 +145,7 @@ Item {
 
     DescriptionText {
         id: notRunningRepresentation
-        opacity: !mediaWatcher.currentTitle && root.geniusToken ? 1 : 0
+        opacity: !descriptionContainer.trackTitle && root.geniusToken ? 1 : 0
         text: 'No Player Detected'
 
         anchors.left: parent.left
@@ -145,8 +163,8 @@ Item {
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.bottom: parent.bottom
-        opacity: mediaWatcher.currentTitle && descriptionHolder.isEmpty && root.geniusToken ? 1 : 0
-        
+        opacity: descriptionHolder.loading && root.geniusToken ? 1 : 0
+
         AnimatedImage {
             id: loadingGif
             paused: loadingRepresentation.opacity === 0
@@ -155,7 +173,7 @@ Item {
             anchors.right: parent.right
             anchors.top: parent.top
             anchors.bottom: parent.bottom
-        }    
+        }
     }
 
     states: State {
