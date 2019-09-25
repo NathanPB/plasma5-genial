@@ -83,6 +83,7 @@ Item {
             } else {
                 descriptionHolder.clear();
                 albumCover.source = '';
+                descriptionContainer.trackTitle = '';
             }
         }
     }
