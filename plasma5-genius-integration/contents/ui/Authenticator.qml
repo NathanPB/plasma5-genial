@@ -19,17 +19,29 @@ PlasmaCore.Dialog {
             let match = url.toString().match('https:\/\/genius\.com\/#access_token=(.+(?=&))');
             if(match) {
                 root.success(match[1]);
+            } else if(url.toString().startsWith("https://genius.com/#error=access_denied")) {
+                root.failed();
             }
         }
 
         experimental.userAgent:"Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36  (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36"
         url: "https://api.genius.com/oauth/authorize?client_id=PyYhlOZ-ALLjy10Bd2zwwMzO4buASkM2aarcsiBZyPTbJ5iXVHqTs_vmo1mhFA4D&redirect_uri=https://genius.com/&response_type=token&scope=me%20create_annotation"
+    
+        onLoadingChanged: {
+            if(loadRequest.errorCode !== 200 && loadRequest.errorCode !== 0) {
+                root.failed();
+            }
+        }
     }
 
     signal success(string token)
     signal failed()
 
     onSuccess: {
+        visible = false;
+    }
+
+    onFailed: {
         visible = false;
     }
 

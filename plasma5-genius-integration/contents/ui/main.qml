@@ -30,7 +30,7 @@ Item {
                 let trackTitle = title;
                 if(artists.length > 0) {
                     trackTitle = `${artists[0]} - ${trackTitle}`;
-
+                    
                     if(artists.length > 1) {
                         trackTitle += ` ft. ${artists.slice(1).join(', ')}`;
                     }
@@ -111,7 +111,7 @@ Item {
             text: descriptionHolder.isEmpty ? '' : descriptionHolder.descriptionArray[descriptionHolder.currentIndex]
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
-        }
+        }    
 
         TimerProgressBar {
             id: progressBar
@@ -124,7 +124,7 @@ Item {
     Item {
         id: missingAuthenticationRepresentation
         opacity: root.geniusToken ? 0 : 1
-
+    
         DescriptionText {
             text: 'You are not logged in!\n'
         }
@@ -164,7 +164,7 @@ Item {
         anchors.top: parent.top
         anchors.bottom: parent.bottom
         opacity: descriptionHolder.loading && root.geniusToken ? 1 : 0
-
+        
         AnimatedImage {
             id: loadingGif
             paused: loadingRepresentation.opacity === 0
@@ -173,7 +173,7 @@ Item {
             anchors.right: parent.right
             anchors.top: parent.top
             anchors.bottom: parent.bottom
-        }
+        }    
     }
 
     states: State {
