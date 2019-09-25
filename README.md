@@ -4,7 +4,7 @@ Plasmoid for KDE Plasma 5 that fetches data from [Genius](https://genius.com) ab
 
 # Demo
 
-![demo](https://i.imgur.com/HnW4luZ.jpg)
+<img src="demo.gif">
 
 # Supports at this moment
   - Spotify
