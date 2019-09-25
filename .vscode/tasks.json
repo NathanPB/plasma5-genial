@@ -12,6 +12,24 @@
                 "kind": "build",
                 "isDefault": true
             }
+        },
+        {
+            "label": "upgrade",
+            "type": "shell",
+            "command": "kpackagetool5 -t Plasma/Applet --upgrade plasma5-genius-integration",
+            "problemMatcher": []
+        },
+        {
+            "label": "remove",
+            "type": "shell",
+            "command": "kpackagetool5 -t Plasma/Applet --remove dev.nathanpb.plasmagenius",
+            "problemMatcher": []
+        },
+        {
+            "label": "install",
+            "type": "shell",
+            "command": "kpackagetool5 -t Plasma/Applet --install plasma5-genius-integration",
+            "problemMatcher": []
         }
     ]
 }
