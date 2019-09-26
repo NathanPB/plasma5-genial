@@ -100,11 +100,13 @@ Item {
             root.loading = true;
             ApiHelper.searchTrackData(trackId, apiKey)
                 .then((data) => {
-                    root.trackTitle = data.full_title;
                     root.albumCover = data.header_image_url;
                     root.descriptionParagraphs = Utils.formatParagraphs(data.description.plain);
                     root.media = data.media;
                     root.loading = false;
+                    
+                    if(root.descriptionParagraphs.length > 0)
+                        root.trackTitle = data.full_title;
                 }).catch(root.error);
         }
 

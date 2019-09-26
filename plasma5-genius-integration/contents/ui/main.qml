@@ -74,6 +74,7 @@ Item {
         DescriptionContainer {
             id: descriptionContainer
             text: descriptionHolder.isEmpty ? '' : descriptionHolder.descriptionArray[descriptionHolder.currentIndex]
+            trackTitle: trackDataContainer.trackTitle
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
         }    
