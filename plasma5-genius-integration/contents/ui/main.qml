@@ -3,6 +3,7 @@ import org.kde.plasma.plasmoid 2.0
 import org.kde.plasma.core 2.0 as PlasmaCore
 import QtQuick.Controls 2.5
 import '../code/api-helper.js' as ApiHelper;
+import '../code/utils.js' as Utils;
 
 import '../code'
 
@@ -19,6 +20,10 @@ Item {
         onSuccess: {
             root.geniusToken = token;
         }
+
+        onFailed: {
+            root.geniusToken = '';
+        }
     }
 
     MediaWatcher {
@@ -26,70 +31,28 @@ Item {
 
         onTitleChange: {
             if(title && root.geniusToken) {
-                let artists = mediaWatcher.currentArtist;
-                let trackTitle = title;
-                if(artists.length > 0) {
-                    trackTitle = `${artists[0]} - ${trackTitle}`;
-                    
-                    if(artists.length > 1) {
-                        trackTitle += ` ft. ${artists.slice(1).join(', ')}`;
-                    }
-                }
-
-                descriptionContainer.trackTitle = trackTitle;
-                descriptionHolder.loading = true
-                ApiHelper.searchTrack(`${title} ${(mediaWatcher.currentArtist || []).join(' ')}`, root.geniusToken)
-                    .then(track => {
-                        if(track) {
-                        albumCover.source = track.header_image_url;
-                        ApiHelper.searchTrackDescriptions(track.id, root.geniusToken)
-                            .then(description => {
-                                let descriptionArray = [];
-                                description.split('\n\n').forEach(paragraph => {
-                                    if(paragraph.length > 3) {
-                                        if(paragraph.length <= 256) {
-                                            descriptionArray.push(paragraph);
-                                        } else {
-                                            let appender = '';
-                                            paragraph.split(" ").forEach(word => {
-                                                if(appender.length > 256) {
-                                                    descriptionArray.push(`${appender}...`);
-                                                    appender = '';
-                                                } else {
-                                                    appender += ` ${word}`;
-                                                }
-                                            })
-                                            if(appender.length <= 256) {
-                                                descriptionArray.push(appender);
-                                            }
-                                        }
-                                    }
-                                });
-
-
-                                descriptionHolder.descriptionArray = descriptionArray;
-                                descriptionHolder.loading = false;
-                                descriptionHolder.forceUpdate();
-                            });
-                        }
-                    })
-                    .catch(it => {
-                        if(it.error === "invalid_token" || it === 401 || (it.meta && it.meta.status === 401)) {
-                            root.geniusToken = '';
-                        } else {
-                            console.error(JSON.stringify(it));
-                        }
-                    });
+                trackDataContainer.search(title, mediaWatcher.currentArtist, root.geniusToken);
             } else {
-                descriptionHolder.clear();
-                albumCover.source = '';
-                descriptionContainer.trackTitle = '';
+                trackDataContainer.clear();
+            }
+        }
+    }
+
+    TrackDataContainer {
+        id: trackDataContainer
+
+        onError: {
+            if(error === "invalid_token" || error === 401 || (error.meta && error.meta.status === 401)) {
+                root.geniusToken = '';
+            } else {
+                console.error(JSON.stringify(it));
             }
         }
     }
 
     DescriptionHolder {
         id: descriptionHolder
+        descriptionArray: trackDataContainer.descriptionParagraphs
 
         onTriggered: {
             progressBar.updateTo(delay)
@@ -98,13 +61,14 @@ Item {
 
     Item {
         id: runningRepresentation
-        opacity: geniusToken && descriptionContainer.trackTitle && !descriptionHolder.loading ? 1 : 0
+        opacity: geniusToken && trackDataContainer.trackTitle && !trackDataContainer.loading ? 1 : 0
 
         width: 256
         height: 256
 
         AlbumCover {
             id: albumCover
+            source: trackDataContainer.albumCover
         }
 
         DescriptionContainer {
@@ -146,13 +110,12 @@ Item {
 
     DescriptionText {
         id: notRunningRepresentation
-        opacity: !descriptionContainer.trackTitle && root.geniusToken ? 1 : 0
+        opacity: !trackDataContainer.trackTitle && root.geniusToken ? 1 : 0
         text: 'No Player Detected'
 
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.verticalCenter: parent.verticalCenter
-        anchors.horizontalCenter: parent.horizontalCenter
     }
 
     Rectangle {
@@ -164,7 +127,7 @@ Item {
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.bottom: parent.bottom
-        opacity: descriptionHolder.loading && root.geniusToken ? 1 : 0
+        opacity: trackDataContainer.loading && root.geniusToken ? 1 : 0
         
         AnimatedImage {
             id: loadingGif

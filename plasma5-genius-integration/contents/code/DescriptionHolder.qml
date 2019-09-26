@@ -5,13 +5,12 @@ Item {
     property var descriptionArray: []
     property int currentIndex: 0
     property bool isEmpty: descriptionArray.length === 0
-    property bool loading: false
 
     signal triggered(string desc, int delay)
 
     Timer {
         id: theTimer
-        running: !root.isEmpty && !root.loading
+        running: !root.isEmpty
         repeat: true
         triggeredOnStart: true
         interval: Math.max((root.descriptionArray[root.currentIndex] || '').length * 75, 5000)

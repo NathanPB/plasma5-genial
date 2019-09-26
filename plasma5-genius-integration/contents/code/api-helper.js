@@ -34,17 +34,31 @@ const apiRequest = (endpoint, apiKey) => new Promise((resolve, reject) => {
         }).catch(reject);
 })
 
-
-const searchTrack = (searchTerm, apiKey) => new Promise((resolve, reject) => {
+/*
+ * Searches a term on Genius API and return the ID of the track, if found.
+ * 
+ * @param searchTerm    string  The term to search for.
+ * @param apiKey        string  The Genius API access token.
+ * @returns string      The ID of the first song found. Undefined if nothing is found.
+ * @throws              Errors during the HTTP request or the response meta from Genius if the response status code is not 200.
+ */
+const searchTrackId = (searchTerm, apiKey) => new Promise((resolve, reject) => {
     apiRequest(`search?q=${encodeURI(searchTerm)}`, apiKey)
         .then(response => {
             let tracks = response.hits.filter(it => it.type === 'song');
-            resolve(tracks.length > 0 ? tracks[0].result : undefined);
+            resolve(tracks.length > 0 ? tracks[0].result.id : undefined);
         }).catch(reject);
 });
 
-const searchTrackDescriptions = (trackId, apiKey) => new Promise((resolve, reject) => {
+/*
+ * Fetches data from a song on Genius API with its ID.
+ * 
+ * @param trackId   string  The ID of the track to get the data.
+ * @param apiKey    string  The Genius API access token.
+ * @throws                  Errors during the HTTP request or the response meta from Genius if the response status code is not 200.
+ */
+const searchTrackData = (trackId, apiKey) => new Promise((resolve, reject) => {
     apiRequest(`songs/${trackId}?text_format=plain`, apiKey)
-        .then(response => resolve(response.song.description.plain))
+        .then(response => resolve(response.song))
         .catch(reject);
-})
+});
