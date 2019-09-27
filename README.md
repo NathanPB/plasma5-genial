@@ -6,6 +6,28 @@ Plasmoid for KDE Plasma 5 that fetches data from [Genius](https://genius.com) ab
 
 <img src="demo.gif">
 
+# Installation Guide
+
+## Install
+- $ git clone https://github.com/NathanPB/plasma5-genius-integration.git
+    - Or download the project and unzip it
+
+- $ cd plasma5-genius-integration
+- $ ./install.sh
+
+## Upgrade
+
+- $ git clone https://github.com/NathanPB/plasma5-genius-integration.git
+    - Or download the project and unzip it
+
+- $ cd plasma5-genius-integration
+- $ ./upgrade.sh
+
+
+## Remove
+- $ kpackagetool5 -t Plasma/Applet --remove dev.nathanpb.plasmagenius
+    - Or use the uninstall script: $ ./uninstall.sh
+
 # Supports at this moment
   - Spotify
   
