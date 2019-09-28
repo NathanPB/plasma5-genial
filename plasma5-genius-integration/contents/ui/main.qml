@@ -61,7 +61,7 @@ Item {
 
     Item {
         id: runningRepresentation
-        opacity: geniusToken && trackDataContainer.trackTitle && !trackDataContainer.loading ? 1 : 0
+        opacity: root.state === "RUNNING" ? 1 : 0
 
         width: 256
         height: 256
@@ -89,7 +89,7 @@ Item {
 
     Item {
         id: missingAuthenticationRepresentation
-        opacity: root.geniusToken ? 0 : 1
+        opacity: root.state === "MISSING_AUTHENTICATION" ? 1 : 0
     
         DescriptionText {
             text: 'You are not logged in!\n'
@@ -111,7 +111,7 @@ Item {
 
     DescriptionText {
         id: notRunningRepresentation
-        opacity: !trackDataContainer.trackTitle && root.geniusToken ? 1 : 0
+        opacity: root.state === "NOT_RUNNING" ? 1 : 0
         text: 'No Player Detected'
 
         anchors.left: parent.left
@@ -128,11 +128,11 @@ Item {
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.bottom: parent.bottom
-        opacity: trackDataContainer.loading && root.geniusToken ? 1 : 0
+        opacity: root.state === "LOADING" ? 1 : 0
         
         AnimatedImage {
             id: loadingGif
-            paused: loadingRepresentation.opacity === 0
+            paused: root.state !== "LOADING"
             source: "../assets/loading.gif"
             anchors.left: parent.left
             anchors.right: parent.right
@@ -141,12 +141,32 @@ Item {
         }    
     }
 
-    states: State {
-        name: "RUNNING"
-        when: runningRepresentation.opacity == 1
-        PropertyChanges {
-            target: root
-            Plasmoid.backgroundHints: PlasmaCore.Types.NoBackground
+    states: [
+        State {
+            name: "RUNNING"
+            when: geniusToken && !trackDataContainer.loading
+            PropertyChanges {
+                target: root
+                Plasmoid.backgroundHints: PlasmaCore.Types.NoBackground
+            }
+            StateChangeScript {
+                name: "refreshMediaWatcher"
+                script: {
+                    mediaWatcher.refresh();
+                }
+            }
+        },
+        State {
+            name: "LOADING"
+            when: trackDataContainer.loading && root.geniusToken
+        },
+        State {
+            name: "NOT_RUNNING"
+            when: !trackDataContainer.trackTitle && root.geniusToken
+        },
+        State {
+            name: "MISSING_AUTHENTICATION"
+            when: !root.geniusToken
         }
-    }
+    ]
 }

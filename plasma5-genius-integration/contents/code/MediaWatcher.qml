@@ -2,16 +2,13 @@ import QtQuick 2.0
 import org.kde.plasma.core 2.0 as PlasmaCore
 
 Item {
-    id: mpris2Source
-    property var mprisSource: mpris2DataSource
+    id: root
 
-    property var metadata: mpris2DataSource.currentData.Metadata || {};
-
-    property string currentTrackId: metadata['mpris:trackid'] || null
-    property string currentAlbum:   metadata['xesam:album']   || null
-    property var currentArtist:     metadata['xesam:artist']  || null
-    property string currentTitle:   metadata['xesam:title']   || null
-    property string currentUrl:     metadata['xesam:url']     || null
+    property string currentTrackId: internals.metadata['mpris:trackid'] || null
+    property string currentAlbum:   internals.metadata['xesam:album']   || null
+    property var currentArtist:     internals.metadata['xesam:artist']  || null
+    property string currentTitle:   internals.metadata['xesam:title']   || null
+    property string currentUrl:     internals.metadata['xesam:url']     || null
 
     signal trackIdChange(string trackId)
     signal albumChange(string album)
@@ -19,13 +16,18 @@ Item {
     signal titleChange(string title)
     signal urlChange(url url)
 
+    function refresh() {
+        dataSource.currentDataChanged();
+    }
+
     Item {
-        id: playerCache
+        id: internals
         property var cache: {}
+        property var metadata: dataSource.currentData.Metadata || {};
     }
 
     PlasmaCore.DataSource {
-        id: mpris2DataSource
+        id: dataSource
 
         engine: "mpris2"
 
@@ -34,32 +36,32 @@ Item {
         connectedSources: "@multiplex"
 
         onCurrentDataChanged: {
-            const cache = playerCache.cache || {};
+            const cache = internals.cache || {};
             const currentData = {
-                trackId: mpris2Source.currentTrackId,
-                album: mpris2Source.currentAlbum,
-                artist: mpris2Source.currentArtist,
-                title: mpris2Source.currentTitle,
-                url: mpris2Source.currentUrl
+                trackId: root.currentTrackId,
+                album: root.currentAlbum,
+                artist: root.currentArtist,
+                title: root.currentTitle,
+                url: root.currentUrl
             };
 
-            if(mpris2Source.currentTrackId !== cache.trackId)
-                mpris2Source.trackIdChange(mpris2Source.currentTrackId);
+            if(root.currentTrackId !== cache.trackId)
+                root.trackIdChange(root.currentTrackId);
 
-            if(mpris2Source.currentAlbum !== cache.album)
-                mpris2Source.albumChange(mpris2Source.currentAlbum);
+            if(root.currentAlbum !== cache.album)
+                root.albumChange(root.currentAlbum);
             
             //JS hacks ftw
-            if( (mpris2Source.currentArtist || []).sort().toString() !== (cache.artist || []).sort().toString())
-                mpris2Source.artistChange(mpris2Source.currentArtist);
+            if((root.currentArtist || []).sort().toString() !== (cache.artist || []).sort().toString())
+                root.artistChange(root.currentArtist);
 
-            if(mpris2Source.currentTitle !== cache.title)
-                mpris2Source.titleChange(mpris2Source.currentTitle);
+            if(root.currentTitle !== cache.title)
+                root.titleChange(root.currentTitle);
 
-            if(mpris2Source.currentUrl !== cache.url)
-                mpris2Source.urlChange(mpris2Source.currentUrl);
+            if(root.currentUrl !== cache.url)
+                root.urlChange(root.currentUrl);
 
-            playerCache.cache = currentData;
+            internals.cache = currentData;
         }
     }
 
@@ -67,7 +69,8 @@ Item {
         running: true
         repeat: true
         onTriggered: {
-            if(!mpris2Source.currentTitle) mpris2DataSource.currentDataChanged();
+            if(!root.currentTitle)
+                root.refresh();
         }
     }
 }
