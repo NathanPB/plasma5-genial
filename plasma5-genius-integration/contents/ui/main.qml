@@ -55,7 +55,7 @@ Item {
             if(error === "invalid_token" || error === 401 || (error.meta && error.meta.status === 401)) {
                 root.geniusToken = '';
             } else {
-                console.error(JSON.stringify(it));
+                console.error(JSON.stringify(error));
             }
         }
     }
