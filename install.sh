@@ -1,1 +1,1 @@
-kpackagetool5 -t Plasma/Applet --install plasma5-genius-integration
+kpackagetool5 -t Plasma/Applet --install plasma5-genial

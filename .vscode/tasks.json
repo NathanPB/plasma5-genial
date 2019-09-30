@@ -6,7 +6,7 @@
         {
             "label": "plasmoidviewer",
             "type": "shell",
-            "command": "plasmoidviewer -a plasma5-genius-integration",
+            "command": "plasmoidviewer -a plasma5-genial",
             "problemMatcher": [],
             "group": {
                 "kind": "build",

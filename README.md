@@ -9,23 +9,23 @@ Plasmoid for KDE Plasma 5 that fetches data from [Genius](https://genius.com) ab
 # Installation Guide
 
 ## Install
-- $ git clone https://github.com/NathanPB/plasma5-genius-integration.git
+- $ git clone https://github.com/NathanPB/plasma5-genial.git
     - Or download the project and unzip it
 
-- $ cd plasma5-genius-integration
+- $ cd plasma5-genial
 - $ ./install.sh
 
 ## Upgrade
 
-- $ git clone https://github.com/NathanPB/plasma5-genius-integration.git
+- $ git clone https://github.com/NathanPB/plasma5-genial.git
     - Or download the project and unzip it
 
-- $ cd plasma5-genius-integration
+- $ cd plasma5-genial-integration
 - $ ./upgrade.sh
 
 
 ## Remove
-- $ kpackagetool5 -t Plasma/Applet --remove dev.nathanpb.plasmagenius
+- $ kpackagetool5 -t Plasma/Applet --remove dev.nathanpb.plasmagenial
     - Or use the uninstall script: $ ./uninstall.sh
 
 # Supports at this moment

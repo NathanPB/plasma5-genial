@@ -12,4 +12,4 @@ set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_DIR} ${CMAKE_MODULE_PA
 find_package(KF5Plasma REQUIRED)
 
 # Add installatation target ("make install").
-plasma_install_package(plasma5-genius-integration dev.nathanpb.plasma5genius)
+plasma_install_package(plasma5-genial dev.nathanpb.plasmagenial)

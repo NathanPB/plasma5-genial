@@ -1,5 +1,5 @@
 [Desktop Entry]
-Name=Plasma 5 Genius Integration
+Name=Plasma 5 Genial
 Icon=applications-multimedia
 
 Type=Service
@@ -10,9 +10,9 @@ X-KDE-PluginInfo-Depends=
 X-KDE-PluginInfo-Email=nathan.pbombana@gmail.com
 X-KDE-PluginInfo-EnabledByDefault=true
 X-KDE-PluginInfo-License=GPL-3.0+
-X-KDE-PluginInfo-Name=dev.nathanpb.plasmagenius
+X-KDE-PluginInfo-Name=dev.nathanpb.plasmagenial
 X-KDE-PluginInfo-Version=1.0
-X-KDE-PluginInfo-Website=https:plasmagenius.nathanpb.dev
+X-KDE-PluginInfo-Website=https://plasmagenial.nathanpb.dev
 X-Plasma-API=declarativeappletscript
 X-Plasma-MainScript=ui/main.qml
 X-Plasma-NotificationAreaCategory=ApplicationStatus

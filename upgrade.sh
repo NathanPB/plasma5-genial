@@ -1,1 +1,1 @@
-kpackagetool5 -t Plasma/Applet --upgrade plasma5-genius-integration
+kpackagetool5 -t Plasma/Applet --upgrade plasma5-genial

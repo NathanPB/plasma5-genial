@@ -1,1 +1,1 @@
-kpackagetool5 -t Plasma/Applet --remove dev.nathanpb.plasmagenius
+kpackagetool5 -t Plasma/Applet --remove dev.nathanpb.plasmagenial
