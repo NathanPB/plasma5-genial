@@ -20,7 +20,7 @@ Plasmoid for KDE Plasma 5 that fetches data from [Genius](https://genius.com) ab
 - $ git clone https://github.com/NathanPB/plasma5-genial.git
     - Or download the project and unzip it
 
-- $ cd plasma5-genial-integration
+- $ cd plasma5-genial
 - $ ./upgrade.sh
 
 
