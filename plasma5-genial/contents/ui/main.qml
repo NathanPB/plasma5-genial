@@ -19,7 +19,7 @@ import '../code'
 
 Item {
     id: root
-    property string geniusToken: '***REMOVED***'
+    property string geniusToken: ''
 
 
     width: 256
