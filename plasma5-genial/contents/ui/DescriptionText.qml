@@ -41,7 +41,7 @@ Item {
             when: containing_rect.text.length > 20
             PropertyChanges {
                 target: containing_rect
-                width: 256
+                width: 250
                 height: text_field.paintedHeight
             }
         },
