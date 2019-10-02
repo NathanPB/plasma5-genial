@@ -8,14 +8,37 @@ Plasmoid for KDE Plasma 5 that fetches data from [Genius](https://genius.com) ab
 
 # Installation Guide
 
-## Install
+## Via KDE Store
+
+1. Open the "Add Widgets" dialog of your desktop
+2. Go to "Get New Widgets" in the bottom
+3. Click "Download New Plasma Widgets"
+4. Search for "Genial"
+5. Click "Install"
+6. Drag the plasmoid to your desktop!
+
+## Via OCS
+
+**Note:** [ocs-url](https://www.opendesktop.org/p/1136805/) or [ocs-store](https://www.opendesktop.org/p/1175480/) are required!
+
+1. Go to the [KDE Store Genial page](https://store.kde.org/p/1320258/)
+2. Click "Install"
+3. Select the latest file
+4. Click "Install"
+5. Click "Launch Application" if asked
+6. Open the "Add Widgets" dialog of your desktop and drag the plasmoid!
+
+
+## Via Command Line
+
+### Install
 - ``$ git clone https://github.com/NathanPB/plasma5-genial.git``
     - Or download the project and unzip it
 
 - ``$ cd plasma5-genial``
 - ``$ ./install.sh``
 
-## Upgrade
+### Upgrade
 
 - ``$ git clone https://github.com/NathanPB/plasma5-genial.git``
     - Or download the project and unzip it
@@ -24,7 +47,7 @@ Plasmoid for KDE Plasma 5 that fetches data from [Genius](https://genius.com) ab
 - ``$ ./upgrade.sh``
 
 
-## Remove
+### Remove
 - ``$ kpackagetool5 -t Plasma/Applet --remove dev.nathanpb.plasmagenial``
     - Or use the uninstall script: ``$ ./uninstall.sh``
 
