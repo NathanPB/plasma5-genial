@@ -11,6 +11,7 @@ You should have received a copy of the GNU General Public License along with thi
 import QtQuick 2.0
 import org.kde.plasma.plasmoid 2.0
 import org.kde.plasma.core 2.0 as PlasmaCore
+import org.kde.plasma.components 2.0 as PlasmaComponents
 import QtQuick.Controls 2.5
 import '../code/api-helper.js' as ApiHelper;
 import '../code/utils.js' as Utils;
@@ -129,26 +130,12 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
     }
 
-    Rectangle {
+    PlasmaComponents.BusyIndicator {
         id: loadingRepresentation
-        width: 256
-        height: 256
-        radius: 8
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.top: parent.top
-        anchors.bottom: parent.bottom
         opacity: root.state === "LOADING" ? 1 : 0
-        
-        AnimatedImage {
-            id: loadingGif
-            paused: root.state !== "LOADING"
-            source: "../assets/loading.gif"
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.top: parent.top
-            anchors.bottom: parent.bottom
-        }    
+
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter   
     }
 
     states: [
