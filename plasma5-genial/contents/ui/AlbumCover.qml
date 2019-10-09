@@ -18,11 +18,10 @@ Item {
     Image {
         id: img
         sourceSize: Qt.size(root.parent.width, root.parent.height)
-        width: 256
-        height: 256
         smooth: true
         visible: false
         source: root.source
+        anchors.fill: parent
     }
 
     FastBlur {

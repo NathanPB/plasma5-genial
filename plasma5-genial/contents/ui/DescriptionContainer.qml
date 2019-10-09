@@ -23,6 +23,8 @@ Item {
         opacity: .7
         color: "#000000"
 
+
+        // Hardcoded shit, must get rid of this
         width: 250
         height: 250
         anchors.verticalCenter: root.verticalCenter

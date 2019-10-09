@@ -9,14 +9,16 @@ You should have received a copy of the GNU General Public License along with thi
 */
 
 import QtQuick 2.0
+import QtQuick.Controls 2.5
+
 import org.kde.plasma.plasmoid 2.0
 import org.kde.plasma.core 2.0 as PlasmaCore
-import org.kde.plasma.components 2.0 as PlasmaComponents
-import QtQuick.Controls 2.5
+
 import '../code/api-helper.js' as ApiHelper;
 import '../code/utils.js' as Utils;
 
 import '../code'
+import './representations'
 
 Item {
     id: root
@@ -65,77 +67,23 @@ Item {
         id: descriptionHolder
         descriptionArray: trackDataContainer.descriptionParagraphs
 
-        onTriggered: {
-            progressBar.updateTo(delay)
-        }
+        onTriggered: runningRepresentation.progressBar.updateTo(delay)
     }
 
-    Item {
+    RunningRepresentation {
         id: runningRepresentation
-        opacity: root.state === "RUNNING" ? 1 : 0
-
-        width: 256
-        height: 256
-
-        AlbumCover {
-            id: albumCover
-            source: trackDataContainer.albumCover
-        }
-
-        DescriptionContainer {
-            id: descriptionContainer
-            text: descriptionHolder.isEmpty ? '' : descriptionHolder.descriptionArray[descriptionHolder.currentIndex]
-            trackTitle: trackDataContainer.trackTitle
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.horizontalCenter: parent.horizontalCenter
-        }    
-
-        TimerProgressBar {
-            id: progressBar
-
-            running: !descriptionHolder.isEmpty
-            opacity: descriptionHolder.isEmpty ? 0 : 1
-        }
     }
 
-    Item {
+    MissingAuthenticationRepresentation {
         id: missingAuthenticationRepresentation
-        opacity: root.state === "MISSING_AUTHENTICATION" ? 1 : 0
-    
-        DescriptionText {
-            text: 'You are not logged in!\n'
-        }
-
-        Button {
-            text: 'Login with Genius'
-            onClicked: authenticator.authenticate()
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.bottom: parent.bottom
-        }
-
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        anchors.top: parent.top
     }
 
-    DescriptionText {
+    NotRunningRepresentation {
         id: notRunningRepresentation
-        opacity: root.state === "NOT_RUNNING" ? 1 : 0
-        text: 'No Player Detected'
-
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.verticalCenter: parent.verticalCenter
     }
 
-    PlasmaComponents.BusyIndicator {
+    LoadingRepresentation {
         id: loadingRepresentation
-        opacity: root.state === "LOADING" ? 1 : 0
-
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.horizontalCenter: parent.horizontalCenter   
     }
 
     states: [
@@ -145,6 +93,10 @@ Item {
             PropertyChanges {
                 target: root
                 Plasmoid.backgroundHints: PlasmaCore.Types.NoBackground
+            }
+            PropertyChanges {
+                target: runningRepresentation
+                opacity: 1
             }
             StateChangeScript {
                 name: "refreshMediaWatcher"
@@ -156,14 +108,26 @@ Item {
         State {
             name: "LOADING"
             when: trackDataContainer.loading && root.geniusToken
+            PropertyChanges {
+                target: loadingRepresentation
+                opacity: 1
+            }
         },
         State {
             name: "NOT_RUNNING"
             when: !trackDataContainer.trackTitle && root.geniusToken
+            PropertyChanges {
+                target: notRunningRepresentation
+                opacity: 1
+            }
         },
         State {
             name: "MISSING_AUTHENTICATION"
             when: !root.geniusToken
+            PropertyChanges {
+                target: missingAuthenticationRepresentation
+                opacity: 1
+            }
         }
     ]
 }
