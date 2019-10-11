@@ -10,6 +10,10 @@ You should have received a copy of the GNU General Public License along with thi
 
 import '../'
 
+/*
+ * This representation is responsible for showing the message that the application didn't
+ * found any media player to get the data from.
+ */
 AppRepresentation {
     DescriptionText {
         text: 'No Player Detected'

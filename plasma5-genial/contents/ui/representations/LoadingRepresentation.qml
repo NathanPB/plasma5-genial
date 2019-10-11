@@ -10,6 +10,9 @@ You should have received a copy of the GNU General Public License along with thi
 
 import org.kde.plasma.components 2.0 as PlasmaComponents
 
+/*
+ * This representation is responsible for showing a spinner when the app is loading something.
+ */
 AppRepresentation {
     PlasmaComponents.BusyIndicator {
         anchors.verticalCenter: parent.verticalCenter

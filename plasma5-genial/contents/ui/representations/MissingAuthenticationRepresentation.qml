@@ -11,6 +11,9 @@ You should have received a copy of the GNU General Public License along with thi
 import '../';
 import QtQuick.Controls 2.5
 
+/*
+ * Representation responsible for alerting the user that he is not logged in and show the login button.
+ */
 AppRepresentation {
     DescriptionText {
         text: 'You are not logged in!'

@@ -11,6 +11,10 @@ You should have received a copy of the GNU General Public License along with thi
 import QtQuick 2.0
 import '../'
 
+/*
+ * Representation responsible for showing the album cover and the description of the current track.
+ * This representation also shows the "Nothing Found" message, that should be moved in the future (issue #7).
+ */
 AppRepresentation {
     property var progressBar: progressBar
 

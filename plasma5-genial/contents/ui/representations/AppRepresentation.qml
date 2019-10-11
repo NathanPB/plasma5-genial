@@ -10,6 +10,10 @@ You should have received a copy of the GNU General Public License along with thi
 
 import QtQuick 2.0
 
+/*
+ * Type base of the representations of the application.
+ * Each representation means a different screen of the application.
+ */
 Item {
     opacity: 0
     anchors.fill: parent
