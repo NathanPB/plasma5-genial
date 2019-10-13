@@ -42,11 +42,13 @@ Item {
     MediaWatcher {
         id: mediaWatcher
 
-        onTitleChange: {
-            if(title && root.geniusToken) {
-                trackDataContainer.search(title, mediaWatcher.currentArtist, root.geniusToken);
-            } else {
-                trackDataContainer.clear();
+        onDatasetChange: {
+            if(changedFields.includes("title")) {
+                if(dataset.title && root.geniusToken) {
+                    trackDataContainer.search(dataset.title, dataset.artist || '', root.geniusToken);
+                } else {
+                    trackDataContainer.clear();
+                }
             }
         }
     }
@@ -99,10 +101,7 @@ Item {
                 opacity: 1
             }
             StateChangeScript {
-                name: "refreshMediaWatcher"
-                script: {
-                    mediaWatcher.refresh();
-                }
+                name: "refreshData"
             }
         },
         State {
