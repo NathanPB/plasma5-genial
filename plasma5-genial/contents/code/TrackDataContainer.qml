@@ -46,7 +46,6 @@ Item {
     onApiKeyChanged: searchTermChanged()
 
     onSearchTermChanged: {
-        console.log('searchTermChanged', searchTerm, apiKey)
         if(searchTerm && apiKey) {
             root.loading = true;
             ApiHelper.searchTrackId(searchTerm, root.apiKey)
