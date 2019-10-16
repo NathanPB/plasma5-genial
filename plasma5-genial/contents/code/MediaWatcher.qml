@@ -16,7 +16,7 @@ Item {
 
     property string trackId: dataSource.metadata['mpris:trackid']
     property string album: dataSource.metadata['xesam:album']
-    property string artist: dataSource.metadata['xesam:artist']
+    property var artists: dataSource.metadata['xesam:artist']
     property string title: dataSource.metadata['xesam:title']
     property string url: dataSource.metadata['xesam:url']
 

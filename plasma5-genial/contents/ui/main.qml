@@ -44,7 +44,7 @@ Item {
 
         onTitleChanged: {
             if(title && root.geniusToken) {
-                trackDataContainer.search(title, artist || '', root.geniusToken);
+                trackDataContainer.search(title, artists || [], root.geniusToken);
             } else {
                 trackDataContainer.clear();
             }
