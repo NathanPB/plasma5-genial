@@ -43,16 +43,13 @@ Item {
         id: mediaWatcher
 
         onTitleChanged: {
-            if(title && root.geniusToken) {
-                trackDataContainer.search(title, artists || [], root.geniusToken);
-            } else {
-                trackDataContainer.clear();
-            }
+            trackDataContainer.searchTerm = Utils.formatSearchTrackName(title, artists);
         }
     }
 
     TrackDataContainer {
         id: trackDataContainer
+        apiKey: root.geniusToken
 
         onError: {
             if(error === "invalid_token" || error === 401 || (error.meta && error.meta.status === 401)) {
@@ -66,7 +63,6 @@ Item {
     DescriptionHolder {
         id: descriptionHolder
         descriptionArray: trackDataContainer.descriptionParagraphs
-
         onTriggered: runningRepresentation.progressBar.updateTo(delay)
     }
 
@@ -112,7 +108,7 @@ Item {
         },
         State {
             name: "NOT_RUNNING"
-            when: !trackDataContainer.trackTitle && root.geniusToken
+            when: !trackDataContainer.title && root.geniusToken
             PropertyChanges {
                 target: notRunningRepresentation
                 opacity: 1

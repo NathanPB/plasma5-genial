@@ -12,66 +12,85 @@ import QtQuick 2.0
 import './api-helper.js' as ApiHelper;
 import './utils.js' as Utils;
 
-/* 
+/*
  * Type responsible for searching tracks on Genius.com and storing its data on himself.
  */
 Item {
     id: root
-    property string searchedTerm: ''
-    property string trackTitle: ''
+
+    property string title: ''
     property string albumCover: ''
     property var descriptionParagraphs: []
     property var media: []
 
+    /**
+     * Searches a term on Genius API.
+     */
+    property string searchTerm
+
+    /**
+    * Searches a song on Genius API based in the song ID.
+    */
+    property string searchId
+
+    /**
+     * Indicates a search in proggress.
+     */
     property bool loading: false
 
+    /**
+     * The Genius API key to use in the searches.
+     */
+    property string apiKey
+
+    onApiKeyChanged: searchTermChanged()
+
+    onSearchTermChanged: {
+        console.log('searchTermChanged', searchTerm, apiKey)
+        if(searchTerm && apiKey) {
+            root.loading = true;
+            ApiHelper.searchTrackId(searchTerm, root.apiKey)
+                .then(track => {
+                    if(track) {
+                        root.searchId = track;
+                    } else {
+                        internals.clear();
+                    }
+                }).catch(root.error);
+        } else {
+            internals.clear();
+        }
+    }
+
+    onSearchIdChanged: {
+        root.loading = true;
+        if(searchId && apiKey) {
+            ApiHelper.searchTrackData(searchId, apiKey)
+                .then((data) => {
+                    root.albumCover = data.header_image_url;
+                    root.descriptionParagraphs = Utils.formatParagraphs(data.description.plain);
+                    root.media = data.media;
+                    root.loading = false;
+                    root.title = data.full_title
+                    loading = false;
+                }).catch(root.error);
+        } else {
+            internals.clear();
+        }
+    }
+
+    /**
+     * Indicates that an error happened while searching.
+     */
     signal error(var e)
 
-    onError: {
-        clear();
-    }
-
-    /*
-     * The primary search function. Responsible for generating a search term and search for it, storing its data in the current object.
-     * 
-     * The search term has the format "{Track Title} {Artists sepparated by spaces}".
-     * This function also writes the initial track title in the current object. May be overwritten later.
-     *
-     * @param title     string  The track title.
-     * @param artists   array   The artists names. Default is an empty array.
-     * @param apiKey    string  The Genius API access token. 
-     */
-    function search(title, artists, apiKey) {
-        functionContainer.search(title, artists, apiKey);
-    }
-
-    /*
-     * Searches a term on Genius API and stores its data in the current object.
-     *
-     * This function also sets the object as "loading" and writes the search term.
-     *
-     * @param term      string  The term to search on Genius API.
-     * @param apiKey    string  The Genius API access token.
-     */
-    function searchTerm(term, apiKey) {
-        functionContainer.searchTerm(term, apiKey);
-    }
-
-    /*
-     * Fetches a track from the Genius API and store its data in the current object.
-     *
-     * @param trackId   string  The track ID to get the data.
-     * @param apiKey    string  The Genius API access token.
-     */
-    function setTrack(trackId, apiKey) {
-        functionContainer.setTrack(trackId, apiKey);
-    }
+    onError: internals.clear()
 
     /*
      * Clears all the data stored in the current object.
      */
     function clear() {
-        functionContainer.clear();
+        internals.clear();
     }
 
     /*
@@ -86,43 +105,10 @@ Item {
      * written in an external JavaScript file.```
      */
     Item {
-        id: functionContainer
-
-        function search(title, artists, apiKey) {
-            root.trackTitle = Utils.formatFriendlyTrackName(title, artists);
-            functionContainer.searchTerm(Utils.formatSearchTrackName(title, artists), apiKey);
-        }
-
-        function searchTerm(term, apiKey) {
-            root.searchedTerm = term;
-            root.loading = true;
-            ApiHelper.searchTrackId(term, apiKey)
-                .then(track => {
-                    if(track) {
-                        root.setTrack(track, apiKey);
-                    } else {
-                        root.clear();
-                    }
-                }).catch(root.error);
-        }
-
-        function setTrack(trackId, apiKey) {
-            root.loading = true;
-            ApiHelper.searchTrackData(trackId, apiKey)
-                .then((data) => {
-                    root.albumCover = data.header_image_url;
-                    root.descriptionParagraphs = Utils.formatParagraphs(data.description.plain);
-                    root.media = data.media;
-                    root.loading = false;
-                    
-                    if(root.descriptionParagraphs.length > 0)
-                        root.trackTitle = data.full_title;
-                }).catch(root.error);
-        }
+        id: internals
 
         function clear() {
-            root.searchedTerm = '';
-            root.trackTitle = '';
+            root.title = '';
             root.albumCover = '';
             root.descriptionParagraphs = [];
             root.media = [];

@@ -30,7 +30,7 @@ AppRepresentation {
     DescriptionContainer {
         id: descriptionContainer
         text: descriptionHolder.isEmpty ? '' : descriptionHolder.descriptionArray[descriptionHolder.currentIndex]
-        trackTitle: trackDataContainer.trackTitle
+        trackTitle: trackDataContainer.title
         anchors.fill: parent
 
 
