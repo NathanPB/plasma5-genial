@@ -14,11 +14,11 @@ import org.kde.plasma.core 2.0 as PlasmaCore
 Item {
     id: root
 
-    property string trackId: dataSource.metadata['mpris:trackid']
-    property string album: dataSource.metadata['xesam:album']
-    property var artists: dataSource.metadata['xesam:artist']
-    property string title: dataSource.metadata['xesam:title']
-    property string url: dataSource.metadata['xesam:url']
+    property string trackId: dataSource.metadata['mpris:trackid']   || ''
+    property string album: dataSource.metadata['xesam:album']       || ''
+    property var artists: dataSource.metadata['xesam:artist']       || []
+    property string title: dataSource.metadata['xesam:title']       || ''
+    property string url: dataSource.metadata['xesam:url']           || ''
 
     PlasmaCore.DataSource {
         id: dataSource
