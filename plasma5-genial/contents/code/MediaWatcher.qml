@@ -11,27 +11,14 @@ You should have received a copy of the GNU General Public License along with thi
 import QtQuick 2.0
 import org.kde.plasma.core 2.0 as PlasmaCore
 
-import './mediawatcher-helper.js' as MediaWatcherHelper
-
 Item {
     id: root
 
-    property var dataset
-
-    Component.onCompleted: {
-        dataset = Qt.binding(() => {
-            let newDataset = MediaWatcherHelper.formatDataset(dataSource.metadata);
-            let changes = MediaWatcherHelper.detectChanges(newDataset, this.dataset || {});
-
-            if(changes.length > 0) {
-                root.datasetChange(newDataset, changes);
-            }
-
-            return newDataset;
-        });
-    }
-
-    signal datasetChange(var dataset, var changedFields)
+    property string trackId: dataSource.metadata['mpris:trackid']
+    property string album: dataSource.metadata['xesam:album']
+    property string artist: dataSource.metadata['xesam:artist']
+    property string title: dataSource.metadata['xesam:title']
+    property string url: dataSource.metadata['xesam:url']
 
     PlasmaCore.DataSource {
         id: dataSource

@@ -42,13 +42,11 @@ Item {
     MediaWatcher {
         id: mediaWatcher
 
-        onDatasetChange: {
-            if(changedFields.includes("title")) {
-                if(dataset.title && root.geniusToken) {
-                    trackDataContainer.search(dataset.title, dataset.artist || '', root.geniusToken);
-                } else {
-                    trackDataContainer.clear();
-                }
+        onTitleChanged: {
+            if(title && root.geniusToken) {
+                trackDataContainer.search(title, artist || '', root.geniusToken);
+            } else {
+                trackDataContainer.clear();
             }
         }
     }
