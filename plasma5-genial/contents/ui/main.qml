@@ -43,6 +43,7 @@ Item {
         id: mediaWatcher
 
         onTitleChanged: {
+            nothingFoundRepresentation.term = Utils.formatFriendlyTrackName(title, artists);
             trackDataContainer.searchTerm = Utils.formatSearchTrackName(title, artists);
         }
     }
@@ -82,10 +83,14 @@ Item {
         id: loadingRepresentation
     }
 
+    NothingFoundRepresentation {
+        id: nothingFoundRepresentation
+    }
+
     states: [
         State {
             name: "RUNNING"
-            when: geniusToken && !trackDataContainer.loading
+            when: geniusToken && !trackDataContainer.loading && !descriptionHolder.isEmpty
             PropertyChanges {
                 target: root
                 Plasmoid.backgroundHints: PlasmaCore.Types.NoBackground
@@ -94,8 +99,13 @@ Item {
                 target: runningRepresentation
                 opacity: 1
             }
-            StateChangeScript {
-                name: "refreshData"
+        },
+        State {
+            name: "NOTHING_FOUND"
+            when: geniusToken && !trackDataContainer.loading && descriptionHolder.isEmpty
+            PropertyChanges {
+                target: nothingFoundRepresentation
+                opacity: 1
             }
         },
         State {
