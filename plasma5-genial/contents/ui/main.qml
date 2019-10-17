@@ -74,8 +74,8 @@ Item {
         id: missingAuthenticationRepresentation
     }
 
-    NotRunningRepresentation {
-        id: notRunningRepresentation
+    NoPlayerRepresentation {
+        id: noPlayerRepresentation
     }
 
     LoadingRepresentation {
@@ -107,10 +107,10 @@ Item {
             }
         },
         State {
-            name: "NOT_RUNNING"
+            name: "NO_PLAYER"
             when: !trackDataContainer.title && root.geniusToken
             PropertyChanges {
-                target: notRunningRepresentation
+                target: noPlayerRepresentation
                 opacity: 1
             }
         },
