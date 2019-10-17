@@ -17,5 +17,6 @@ AppRepresentation {
     PlasmaComponents.BusyIndicator {
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter: parent.horizontalCenter
+        running: parent.opacity === 1
     }
 }
