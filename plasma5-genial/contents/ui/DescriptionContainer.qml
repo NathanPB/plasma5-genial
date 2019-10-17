@@ -33,7 +33,7 @@ Item {
 
     DescriptionText {
         id: descriptionText
-        text: root.text || `Nothing found about ${trackTitle} :(`
+        text: root.text
         anchors.verticalCenter: root.verticalCenter
         anchors.horizontalCenter: root.horizontalCenter
     }
