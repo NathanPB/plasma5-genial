@@ -90,7 +90,7 @@ Item {
     states: [
         State {
             name: "RUNNING"
-            when: geniusToken && !trackDataContainer.loading && !descriptionHolder.isEmpty
+            when: geniusToken && !trackDataContainer.loading && !descriptionHolder.isEmpty && mediaWatcher.title
             PropertyChanges {
                 target: root
                 Plasmoid.backgroundHints: PlasmaCore.Types.NoBackground
@@ -102,7 +102,7 @@ Item {
         },
         State {
             name: "NOTHING_FOUND"
-            when: geniusToken && !trackDataContainer.loading && descriptionHolder.isEmpty
+            when: geniusToken && !trackDataContainer.loading && descriptionHolder.isEmpty && mediaWatcher.title
             PropertyChanges {
                 target: nothingFoundRepresentation
                 opacity: 1
@@ -118,7 +118,7 @@ Item {
         },
         State {
             name: "NO_PLAYER"
-            when: !trackDataContainer.title && root.geniusToken
+            when: !trackDataContainer.title && root.geniusToken && !mediaWatcher.title
             PropertyChanges {
                 target: noPlayerRepresentation
                 opacity: 1
