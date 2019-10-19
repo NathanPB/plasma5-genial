@@ -61,6 +61,12 @@ Item {
         }
     }
 
+    Timer {
+        id: loadingTimeout
+        interval: 10000
+        onTriggered: trackDataContainer.clear();
+    }
+
     DescriptionHolder {
         id: descriptionHolder
         descriptionArray: trackDataContainer.descriptionParagraphs
@@ -99,6 +105,10 @@ Item {
                 target: runningRepresentation
                 opacity: 1
             }
+            PropertyChanges {
+                target: loadingTimeout
+                running: false
+            }
         },
         State {
             name: "NOTHING_FOUND"
@@ -114,6 +124,10 @@ Item {
             PropertyChanges {
                 target: loadingRepresentation
                 opacity: 1
+            }
+            PropertyChanges {
+                target: loadingTimeout
+                running: true
             }
         },
         State {
