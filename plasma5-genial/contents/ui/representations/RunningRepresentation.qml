@@ -32,16 +32,6 @@ AppRepresentation {
         trackTitle: trackDataContainer.title
         anchors.fill: parent
 
-
-        TimerProgressBar {
-            id: progressBar
-
-            targetValue: descriptionHolder.interval
-            running: !descriptionHolder.isEmpty
-            opacity: descriptionHolder.isEmpty ? 0 : 1
-            anchors.fill: parent
-        }
-
         Row {
 
             spacing: 8
@@ -55,6 +45,7 @@ AppRepresentation {
                 BulletsDelegate {
                     active: descriptionHolder.currentIndex === index
                     onClicked: descriptionHolder.currentIndex = index
+                    interval: active ? descriptionHolder.interval : 0
                 }
             }
 
