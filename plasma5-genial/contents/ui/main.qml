@@ -70,7 +70,6 @@ Item {
     DescriptionHolder {
         id: descriptionHolder
         descriptionArray: trackDataContainer.descriptionParagraphs
-        onTriggered: runningRepresentation.progressBar.updateTo(delay)
     }
 
     RunningRepresentation {

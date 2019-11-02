@@ -15,9 +15,17 @@ Item {
     id: root
 
     property bool running: false
+    property int targetValue: 0
+
+    onTargetValueChanged: {
+        progressBar.value = 0;
+    }
 
     ProgressBar {
         id: progressBar
+
+        to: root.targetValue
+
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
         anchors.topMargin: 16 //hardcoded shit, must get rid of this
@@ -32,10 +40,5 @@ Item {
         onTriggered: {
             progressBar.value = progressBar.value + 100 > progressBar.to ? 0 : progressBar.value + 100;
         }
-    }
-
-    function updateTo(newValue) {
-        progressBar.to = newValue;
-        progressBar.value = 0;
     }
 }

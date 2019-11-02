@@ -16,14 +16,16 @@ Item {
     property int currentIndex: 0
     property bool isEmpty: descriptionArray.length === 0
 
+    property var currentParagraph: descriptionArray.length > currentIndex ? descriptionArray[currentIndex] : ''
+    property int interval: !isEmpty ? Math.max(root.currentParagraph.length * 75, 5000) : 0;
+
     signal triggered(string desc, int delay)
 
     Timer {
         id: theTimer
-        running: !root.isEmpty
+        running: true
         repeat: true
-        triggeredOnStart: true
-        interval: Math.max((root.descriptionArray[root.currentIndex] || '').length * 75, 5000)
+        interval: root.interval
 
         onTriggered: {
             if(root.currentIndex+1 >= root.descriptionArray.length){
@@ -31,15 +33,11 @@ Item {
             } else {
                 root.currentIndex++;
             }
-
-            if(!root.isEmpty)
-                root.triggered(root.descriptionArray[root.currentIndex], theTimer.interval);
         }
     }
 
-
     function forceUpdate() {
-        if(theTimer.running) theTimer.restart();   
+        if(theTimer.running) theTimer.restart();
     }
 
     function clear() {

@@ -16,7 +16,6 @@ import '../'
  * This representation also shows the "Nothing Found" message, that should be moved in the future (issue #7).
  */
 AppRepresentation {
-    property var progressBar: progressBar
 
     AlbumCover {
         id: albumCover
@@ -37,6 +36,7 @@ AppRepresentation {
         TimerProgressBar {
             id: progressBar
 
+            targetValue: descriptionHolder.interval
             running: !descriptionHolder.isEmpty
             opacity: descriptionHolder.isEmpty ? 0 : 1
             anchors.fill: parent
