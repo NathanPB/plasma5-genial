@@ -8,7 +8,7 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 You should have received a copy of the GNU General Public License along with this program. If not, see https://www.gnu.org/licenses/.
 */
 
-import QtQuick 2.0
+import QtQuick 2.13
 import '../'
 
 /*
@@ -40,6 +40,26 @@ AppRepresentation {
             running: !descriptionHolder.isEmpty
             opacity: descriptionHolder.isEmpty ? 0 : 1
             anchors.fill: parent
+        }
+
+        Row {
+
+            spacing: 8
+            bottomPadding: 8
+
+            Repeater {
+                id: bulletsRepeater
+
+                model: descriptionHolder.descriptionArray.length
+
+                BulletsDelegate {
+                    active: descriptionHolder.currentIndex === index
+                    onClicked: descriptionHolder.currentIndex = index
+                }
+            }
+
+            anchors.bottom: parent.bottom
+            anchors.horizontalCenter: parent.horizontalCenter
         }
     }
 }
