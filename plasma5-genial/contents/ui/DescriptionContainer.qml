@@ -15,26 +15,21 @@ Item {
     property string text
     property string trackTitle
 
-    width: 250
-    height: 250
-
     Rectangle {
         radius: 8
         opacity: .7
         color: "#000000"
 
-
-        // Hardcoded shit, must get rid of this
-        width: 250
-        height: 250
-        anchors.verticalCenter: root.verticalCenter
-        anchors.horizontalCenter: root.horizontalCenter
+        anchors.margins: 4
+        anchors.fill: parent
     }
 
     DescriptionText {
         id: descriptionText
         text: root.text
-        anchors.verticalCenter: root.verticalCenter
-        anchors.horizontalCenter: root.horizontalCenter
+
+        anchors.fill: parent
     }
+
+    anchors.fill: parent
 }

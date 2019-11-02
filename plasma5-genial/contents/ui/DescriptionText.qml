@@ -16,17 +16,16 @@ Item {
 
     Text {
         id: text_field
-        anchors.top: parent.top
-        anchors.left: parent.left
 
-        height: parent.height
-        width: parent.width
         text: parent.text
         wrapMode: Text.WordWrap
         font.bold: true
         font.pointSize: 12
         horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
         color: "#FFFFFF"
+
+        anchors.fill: parent
     }
 
     Text {
