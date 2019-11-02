@@ -30,6 +30,12 @@
             "type": "shell",
             "command": "./install.sh",
             "problemMatcher": []
+        },
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "./build.sh",
+            "problemMatcher": []
         }
     ]
 }
