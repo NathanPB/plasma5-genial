@@ -17,9 +17,10 @@ import org.kde.plasma.components 2.0 as PlasmaComponents
 AppRepresentation {
     PlasmaComponents.Label {
         text: 'You are not logged in!'
-        anchors.horizontalCenter: parent.horizontalCenter
         font.pointSize: 12
         font.bold: true
+
+        anchors.horizontalCenter: parent.horizontalCenter
     }
 
     Button {
