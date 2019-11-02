@@ -8,15 +8,18 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 You should have received a copy of the GNU General Public License along with this program. If not, see https://www.gnu.org/licenses/.
 */
 
-import '../';
 import QtQuick.Controls 2.5
+import org.kde.plasma.components 2.0 as PlasmaComponents
 
 /*
  * Representation responsible for alerting the user that he is not logged in and show the login button.
  */
 AppRepresentation {
-    DescriptionText {
+    PlasmaComponents.Label {
         text: 'You are not logged in!'
+        anchors.horizontalCenter: parent.horizontalCenter
+        font.pointSize: 12
+        font.bold: true
     }
 
     Button {
