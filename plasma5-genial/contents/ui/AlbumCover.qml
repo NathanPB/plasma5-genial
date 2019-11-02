@@ -17,7 +17,7 @@ Item {
 
     Image {
         id: img
-        sourceSize: Qt.size(root.parent.width, root.parent.height)
+        sourceSize: Qt.size(width, height)
         smooth: true
         visible: false
         source: root.source
@@ -44,4 +44,4 @@ Item {
             }
         }
     }
-}   
+}

@@ -21,10 +21,8 @@ AppRepresentation {
     AlbumCover {
         id: albumCover
         source: trackDataContainer.albumCover
-        width: 256
-        height: 256
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.horizontalCenter: parent.horizontalCenter
+
+        anchors.fill: parent
     }
 
     DescriptionContainer {
@@ -50,7 +48,6 @@ AppRepresentation {
                 active: descriptionHolder.currentIndex === index
                 interval: active ? descriptionHolder.interval : 0
             }
-
 
             anchors.bottom: parent.bottom
             anchors.horizontalCenter: parent.horizontalCenter
