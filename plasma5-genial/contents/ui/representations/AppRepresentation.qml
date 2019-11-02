@@ -15,6 +15,6 @@ import QtQuick 2.0
  * Each representation means a different screen of the application.
  */
 Item {
-    opacity: 0
+    visible: false
     anchors.fill: parent
 }

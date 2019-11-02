@@ -103,7 +103,7 @@ Item {
             }
             PropertyChanges {
                 target: runningRepresentation
-                opacity: 1
+                visible: true
             }
             PropertyChanges {
                 target: loadingTimeout
@@ -115,7 +115,7 @@ Item {
             when: geniusToken && !trackDataContainer.loading && descriptionHolder.isEmpty && mediaWatcher.title
             PropertyChanges {
                 target: nothingFoundRepresentation
-                opacity: 1
+                visible: true
             }
         },
         State {
@@ -123,7 +123,7 @@ Item {
             when: trackDataContainer.loading && root.geniusToken
             PropertyChanges {
                 target: loadingRepresentation
-                opacity: 1
+                visible: true
             }
             PropertyChanges {
                 target: loadingTimeout
@@ -135,7 +135,7 @@ Item {
             when: !trackDataContainer.title && root.geniusToken && !mediaWatcher.title
             PropertyChanges {
                 target: noPlayerRepresentation
-                opacity: 1
+                visible: true
             }
         },
         State {
@@ -143,7 +143,7 @@ Item {
             when: !root.geniusToken
             PropertyChanges {
                 target: missingAuthenticationRepresentation
-                opacity: 1
+                visible: true
             }
         }
     ]
