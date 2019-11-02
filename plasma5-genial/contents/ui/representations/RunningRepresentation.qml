@@ -9,6 +9,7 @@ You should have received a copy of the GNU General Public License along with thi
 */
 
 import QtQuick 2.13
+import QtQuick.Controls 2.13
 import '../'
 
 /*
@@ -32,22 +33,24 @@ AppRepresentation {
         trackTitle: trackDataContainer.title
         anchors.fill: parent
 
-        Row {
+        PageIndicator {
 
-            spacing: 8
-            bottomPadding: 8
+            interactive: true
+            count: descriptionHolder.descriptionArray.length
+            currentIndex: descriptionHolder.currentIndex
 
-            Repeater {
-                id: bulletsRepeater
-
-                model: descriptionHolder.descriptionArray.length
-
-                BulletsDelegate {
-                    active: descriptionHolder.currentIndex === index
-                    onClicked: descriptionHolder.currentIndex = index
-                    interval: active ? descriptionHolder.interval : 0
+            onCurrentIndexChanged: {
+                if(descriptionHolder.currentIndex != currentIndex) {
+                    descriptionHolder.currentIndex = currentIndex;
+                    descriptionHolder.forceUpdate();
                 }
             }
+
+            delegate: BulletsDelegate {
+                active: descriptionHolder.currentIndex === index
+                interval: active ? descriptionHolder.interval : 0
+            }
+
 
             anchors.bottom: parent.bottom
             anchors.horizontalCenter: parent.horizontalCenter

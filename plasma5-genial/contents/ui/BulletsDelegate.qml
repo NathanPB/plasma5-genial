@@ -7,8 +7,6 @@ Rectangle {
     property int interval: 0
     property int progress: 0
 
-    signal clicked()
-
     width: active ? 13 : 10
     height: width
 
@@ -19,9 +17,9 @@ Rectangle {
 
     radius: width * 0.5
 
-    MouseArea {
-        anchors.fill: parent
-        onClicked: parent.clicked()
+    onActiveChanged: {
+        progress = 0;
+        theTimer.sumInterval = 0;
     }
 
     Canvas {
@@ -50,6 +48,7 @@ Rectangle {
     }
 
     Timer {
+        id: theTimer;
         running: root.active
         interval: 100
         repeat: true
