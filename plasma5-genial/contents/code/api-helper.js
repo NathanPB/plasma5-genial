@@ -21,7 +21,7 @@ const httpRequest = (url, method, headers) => new Promise((resolve, reject) => {
 
     request.onreadystatechange = () => {
         if(request.readyState === XMLHttpRequest.DONE) {
-            resolve(request);
+            resolve(request.response);
         }
     }
 
@@ -30,8 +30,8 @@ const httpRequest = (url, method, headers) => new Promise((resolve, reject) => {
 
 const apiRequest = (endpoint, apiKey) => new Promise((resolve, reject) => {
     httpRequest(`${API_URL}${endpoint}`, 'GET', {Authorization: `Bearer ${apiKey}`})
-        .then(request => {
-            let response = JSON.parse(request.response);
+        .then(textResponse => {
+            let response = JSON.parse(textResponse);
             if(response.meta) {
                 if(response.response && response.meta.status === 200) {
                     resolve(response.response);
