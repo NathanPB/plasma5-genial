@@ -12,6 +12,8 @@ import QtQuick 2.13
 import QtQuick.Controls 2.13
 import '../'
 
+import '../../code/media-helper.js' as MediaHelper;
+
 /*
  * Representation responsible for showing the album cover and the description of the current track.
  * This representation also shows the "Nothing Found" message, that should be moved in the future (issue #7).
@@ -30,6 +32,31 @@ AppRepresentation {
         text: descriptionHolder.isEmpty ? '' : descriptionHolder.descriptionArray[descriptionHolder.currentIndex]
         trackTitle: trackDataContainer.title
         anchors.fill: parent
+
+        Row {
+            id: mediaButtons
+
+            property var media: MediaHelper.reduceMediaToProviders(trackDataContainer.media)
+
+            onMediaChanged: {
+                console.log(JSON.stringify(media));
+            }
+
+            spacing: 2
+
+            Repeater {
+                model: Object.keys(parent.media).length
+
+                MediaButtonsDelegate {
+                    provider: Object.keys(mediaButtons.media)[index]
+                    urls: mediaButtons.media[provider]
+                }
+            }
+
+            anchors.margins: 4
+            anchors.right: parent.right
+            anchors.top: parent.top
+        }
 
         PageIndicator {
 
