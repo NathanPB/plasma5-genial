@@ -21,6 +21,8 @@ Button {
         visible: false
         model: urls
 
-        onActivated: Qt.openUrlExternally(root.urls[index])
+        delegate: MediaURLButtonDelegate {
+            url: modelData
+        }
     }
 }

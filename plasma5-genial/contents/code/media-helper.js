@@ -1,3 +1,5 @@
+.import 'youtube-helper.js' as YoutubeHelper;
+
 const getProviderIcon = (provider) => {
     switch(provider) {
         case 'spotify': return 'spotify-client';
@@ -5,6 +7,12 @@ const getProviderIcon = (provider) => {
         case 'youtube': return 'youtube';
     }
 }
+
+const extractProviderFromUrl = (url) =>
+    url.includes('soundcloud.com') ? 'soundcloud' :
+    url.includes('spotify.com') ? 'spotify' :
+    url.includes('youtube.com') || url.includes('youtu.be') ? 'youtube' :
+    'UNKNOWN'
 
 const reduceMediaToProviders = (mediaArray) => mediaArray.reduce((previous, current) => {
     if(current.provider in previous) {
@@ -14,3 +22,27 @@ const reduceMediaToProviders = (mediaArray) => mediaArray.reduce((previous, curr
     }
     return previous;
 }, {});
+
+const formatDataset = (provider, dataset) => {
+    switch(provider) {
+        case 'youtube': return {
+            image: dataset.thumbnail_url,
+            title: dataset.title,
+            author: dataset.author_name
+        }
+        default: throw `Provider '${provider}' not supported!`
+    }
+}
+
+const getDataFromUrl = (url) => new Promise((resolve, reject) => {
+    let provider = extractProviderFromUrl(url);
+    let func;
+
+    switch(provider) {
+        case 'youtube': func = YoutubeHelper.getVideoDataFromUrl; break;
+        default: reject(`Provier '${provider}' not supported!`)
+    }
+
+    if(func)
+        func(url).then(resolve).catch(reject);
+})

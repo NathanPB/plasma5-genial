@@ -38,10 +38,6 @@ AppRepresentation {
 
             property var media: MediaHelper.reduceMediaToProviders(trackDataContainer.media)
 
-            onMediaChanged: {
-                console.log(JSON.stringify(media));
-            }
-
             spacing: 2
 
             Repeater {
