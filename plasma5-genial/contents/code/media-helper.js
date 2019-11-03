@@ -1,5 +1,6 @@
 .import 'youtube-helper.js' as YoutubeHelper
 .import 'spotify-helper.js' as SpotifyHelper
+.import 'soundcloud-helper.js' as SoundcloudHelper
 
 const getProviderIcon = (provider) => {
     switch(provider) {
@@ -32,6 +33,7 @@ const formatDataset = (provider, dataset) => {
             author: dataset.author_name
         }
         case 'spotify': return dataset;
+        case 'soundcloud': return dataset;
         default: throw `Provider '${provider}' not supported!`
     }
 }
@@ -43,9 +45,9 @@ const getDataFromUrl = (url) => new Promise((resolve, reject) => {
     switch(provider) {
         case 'youtube': func = YoutubeHelper.getVideoDataFromUrl; break;
         case 'spotify': func = SpotifyHelper.getTrackDataFromUrl; break;
+        case 'soundcloud': func = SoundcloudHelper.getTrackDataFromUrl; break;
         default: reject(`Provier '${provider}' not supported!`)
     }
-
     if(func)
         func(url).then(resolve).catch(reject);
 })
