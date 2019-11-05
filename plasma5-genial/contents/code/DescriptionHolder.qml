@@ -23,7 +23,7 @@ Item {
 
     Timer {
         id: theTimer
-        running: true
+        running: descriptionArray.length > 1
         repeat: true
         interval: root.interval
 

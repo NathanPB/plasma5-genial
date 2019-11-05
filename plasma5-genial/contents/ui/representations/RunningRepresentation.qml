@@ -34,7 +34,7 @@ AppRepresentation {
         PageIndicator {
 
             interactive: true
-            count: descriptionHolder.descriptionArray.length
+            count: descriptionHolder.descriptionArray.length > 1 ? descriptionHolder.descriptionArray.length : 0
             currentIndex: descriptionHolder.currentIndex
 
             onCurrentIndexChanged: {
