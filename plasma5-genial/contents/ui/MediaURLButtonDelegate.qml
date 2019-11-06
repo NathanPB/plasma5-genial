@@ -35,7 +35,7 @@ Item {
             })
     }
 
-    height: 64
+    height: Math.max(64, textColumn.height)
     width: parent.width
 
     Row {
@@ -61,12 +61,17 @@ Item {
         }
 
         Column {
+            id: textColumn
+
             visible: root.state === "DONE"
+            height: titleLabel.height + authorLabel.height
 
             PlasmaComponents.Label {
+                id: titleLabel
+
                 text: root.title
 
-                width: Math.min(root.width - image.width, paintedWidth)
+                width: Math.min(root.width - image.width, paintedWidth) - 2
                 height: paintedHeight
                 wrapMode: Text.WordWrap
                 font.bold: true
@@ -74,9 +79,11 @@ Item {
             }
 
             PlasmaComponents.Label {
+                id: authorLabel
+
                 text: root.author
                 height: paintedHeight
-                font.pointSize: 8
+                font.pointSize: 8 + 2
                 anchors.margins: 0
             }
         }
