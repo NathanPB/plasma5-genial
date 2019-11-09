@@ -8,10 +8,6 @@
             "type": "shell",
             "command": "plasmoidviewer -a plasma5-genial",
             "problemMatcher": [],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
         },
         {
             "label": "upgrade",
@@ -36,6 +32,15 @@
             "type": "shell",
             "command": "./build.sh",
             "problemMatcher": []
+        },
+        {
+            "type": "npm",
+            "script": "run",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
         }
     ]
 }
