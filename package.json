@@ -1,0 +1,34 @@
+{
+  "name": "plasma5-genial",
+  "version": "1.2.0",
+  "description": "Plasmoid for KDE Plasma 5 that fetches song descriptions from Genius of whatever you are listening on Spotify",
+  "scripts": {
+    "run": "plasmoidviewer -a plasma5-genial",
+    "build": "./build.sh",
+    "install": "./install.sh",
+    "upgrade": "./upgrade.sh",
+    "uninstall": "./uninstall.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NathanPB/plasma5-genial.git"
+  },
+  "keywords": [
+    "plasmoid",
+    "genius",
+    "qt5",
+    "javascript"
+  ],
+  "author": "NathanPB<nathan.pbombana@gmail.com>(https://github.com/NathanPB/plasma5-genial)",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/NathanPB/plasma5-genial/issues"
+  },
+  "homepage": "https://github.com/NathanPB/plasma5-genial#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-plugin-transform-decorators-legacy": "^1.3.5",
+    "babel-preset-env": "^1.7.0"
+  }
+}
