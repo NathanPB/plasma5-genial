@@ -2,6 +2,12 @@
 
 Plasmoid for KDE Plasma 5 that fetches data from [Genius](https://genius.com) about whatever you are listening on Spotify.
 
+# WARNING
+
+This applet is causing the desktop to crash in Plasma 5.18.5, KDE Frameworks 5.70.0, Qt 5.15. Not sure what of those components are causign the crash yet, but I'll be after that.
+
+If you have this in your desktop you probably will see a black screen after login, to fix the crash manually edit the file ``~/.config/plasma-org.kde.plasma.desktop-appletsrc`` and manyally remove the Plasma Genial entry or just delete the file (If deleted most of your desktop configurations will be gone). After the changes just re-login.
+
 # Demo
 
 <img src="demo.gif">
